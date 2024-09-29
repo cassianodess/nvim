@@ -91,4 +91,17 @@ return {
     },
     version = '^1.0.0', -- optional: only update when a new 1.x version is released
   },
+  {
+    'akinsho/flutter-tools.nvim',
+    lazy = false,
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'stevearc/dressing.nvim', -- optional for vim.ui.select
+    },
+    -- config = function ()
+    --   require("flutter-tools").setup {} -- use defaults
+    --   
+    -- end
+    config = true,
+  },
 }
