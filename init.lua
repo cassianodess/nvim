@@ -390,11 +390,26 @@ require('lazy').setup({
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
         --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
+        defaults = {
+          file_ignore_patterns = { 'node_modules' }, -- Exemplo de padrão a ser ignorado
+          prompt_prefix = '🔍 ', -- Definindo o ícone de lupa como padrão
+          vimgrep_arguments = {
+            'rg',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case',
+            '--hidden', -- Inclui arquivos ocultos
+            '--no-ignore', -- Não respeitar o .gitignore
+            '--glob',
+            '!.git/', -- Evita incluir o diretório .git
+          },
+          --   mappings = {
+          --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
+          --   },
+        },
         -- pickers = {}
         extensions = {
           ['ui-select'] = {
@@ -411,7 +426,15 @@ require('lazy').setup({
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[F]ind [H]elp' })
       vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = '[F]ind [K]eymaps' })
-      vim.keymap.set('n', '<C-p>', builtin.find_files, { desc = '[F]ind [Files [C-P]' })
+      -- vim.keymap.set('n', '<C-p>', builtin.find_files, { desc = '[F]ind [Files [C-P]' })
+
+      vim.keymap.set('n', '<C-p>', function()
+        require('telescope.builtin').find_files {
+          find_command = { 'rg', '--ignore', '--hidden', '--no-ignore', '--files' }, -- Inclui os arquivos ocultos e ignora o .gitignore
+          prompt_prefix = '🔍 ',
+        }
+      end, { desc = '[F]ind [Files]' })
+
       vim.keymap.set('n', '<leader>fs', builtin.builtin, { desc = '[F]ind [S]elect Telescope' })
       vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = '[F]ind current [W]ord' })
       vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '[F]ind by [G]rep' })
