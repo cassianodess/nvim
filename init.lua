@@ -1,5 +1,7 @@
 --[[
 
+
+
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
 =====================================================================
@@ -89,12 +91,10 @@ P.S. You can delete this when you're done too. It's your config now! :)
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-vim.cmd("set expandtab")
-vim.cmd("set tabstop=3")
-vim.cmd("set softtabstop=3")
-vim.cmd("set shiftwidth=3")
-
--- Copiar no modo visual para o clipboard do sistema
+vim.cmd 'set expandtab'
+vim.cmd 'set tabstop=3'
+vim.cmd 'set softtabstop=3'
+vim.cmd 'set shiftwidth=3'
 vim.api.nvim_set_keymap('v', '<C-S-c>', '"+y', { noremap = true, silent = true })
 vim.opt.swapfile = false
 
@@ -171,7 +171,7 @@ vim.opt.scrolloff = 10
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-vim.keymap.set({'n', 'v', 'c'}, '<leader>j', ':ToggleTerm <CR>')
+vim.keymap.set({ 'n', 'v', 'c' }, '<leader>j', ':ToggleTerm <CR>')
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
@@ -651,7 +651,7 @@ require('lazy').setup({
       --  You can press `g?` for help in this menu.
       require('mason').setup()
       require('java').setup()
-      require('lspconfig').jdtls.setup({})
+      require('lspconfig').jdtls.setup {}
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
@@ -848,7 +848,8 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      -- vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'catppuccin'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
