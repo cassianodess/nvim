@@ -624,6 +624,7 @@ require('lazy').setup({
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         ts_ls = {},
+        -- java = {}
         --
 
         lua_ls = {
@@ -649,7 +650,8 @@ require('lazy').setup({
       --
       --  You can press `g?` for help in this menu.
       require('mason').setup()
-
+      require('java').setup()
+      require('lspconfig').jdtls.setup({})
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
