@@ -95,6 +95,8 @@ vim.cmd 'set expandtab'
 vim.cmd 'set tabstop=3'
 vim.cmd 'set softtabstop=3'
 vim.cmd 'set shiftwidth=3'
+vim.cmd 'set number relativenumber'
+vim.cmd 'set nu rnu'
 vim.api.nvim_set_keymap('v', '<C-S-c>', '"+y', { noremap = true, silent = true })
 vim.opt.swapfile = false
 
