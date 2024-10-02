@@ -137,4 +137,8 @@ return {
   --     vim.cmd('colorscheme github_dark_default')
   --   end,
   -- },
+  {
+    'ThePrimeagen/vim-be-good',
+    cmd = { 'VimBeGood' },
+  },
 }
