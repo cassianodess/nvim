@@ -98,6 +98,8 @@ vim.cmd 'set shiftwidth=3'
 vim.cmd 'set number relativenumber'
 vim.cmd 'set nu rnu'
 vim.api.nvim_set_keymap('v', '<C-S-c>', '"+y', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-d>', '<C-d>zz', {})
+vim.api.nvim_set_keymap('n', '<C-u>', '<C-u>zz', {})
 vim.opt.swapfile = false
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal

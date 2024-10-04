@@ -98,11 +98,11 @@ return {
       'nvim-lua/plenary.nvim',
       'stevearc/dressing.nvim', -- optional for vim.ui.select
     },
-    -- config = function ()
-    --   require("flutter-tools").setup {} -- use defaults
-    --
-    -- end
-    config = true,
+    config = function ()
+      require("flutter-tools").setup {} -- use defaults
+
+    end
+    -- config = true,
   },
   {
     'codota/tabnine-nvim',
@@ -111,8 +111,8 @@ return {
       local tabnine = require 'tabnine'
       tabnine.setup {
         disable_auto_comment = true,
-        accept_keymap = '<Tab>',
-        dismiss_keymap = '<C-]>',
+        accept_keymap = '<C-CR>',
+        dismiss_keymap = 'Esc',
         debounce_ms = 800,
         suggestion_color = { gui = '#808080', cterm = 244 },
         exclude_filetypes = { 'TelescopePrompt', 'NvimTree' },
