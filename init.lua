@@ -101,6 +101,14 @@ vim.api.nvim_set_keymap('v', '<C-S-c>', '"+y', { noremap = true, silent = true }
 vim.api.nvim_set_keymap('n', '<C-d>', '<C-d>zz', {})
 vim.api.nvim_set_keymap('n', '<C-u>', '<C-u>zz', {})
 vim.opt.swapfile = false
+vim.opt.incsearch = true
+
+vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv")
+
+vim.keymap.set("n", "J", "mzJ`z")
+vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "N", "Nzzzv")
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
@@ -430,11 +438,11 @@ require('lazy').setup({
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[F]ind [H]elp' })
       vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = '[F]ind [K]eymaps' })
-      -- vim.keymap.set('n', '<C-p>', builtin.find_files, { desc = '[F]ind [Files [C-P]' })
+      -- vim.keymap.set('n', '<C-p>', builtin.git_files, { desc = '[F]ind [Files [C-P]' })
 
       vim.keymap.set('n', '<C-p>', function()
-        require('telescope.builtin').find_files {
-          find_command = { 'rg', '--ignore', '--hidden', '--no-ignore', '--files' }, -- Inclui os arquivos ocultos e ignora o .gitignore
+        require('telescope.builtin').git_files {
+          -- find_command = { 'rg', '--ignore', '--hidden', '--no-ignore', '--files' }, -- Inclui os arquivos ocultos e ignora o .gitignore
           prompt_prefix = '🔍 ',
         }
       end, { desc = '[F]ind [Files]' })
@@ -877,6 +885,7 @@ require('lazy').setup({
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
       -- vim.cmd.colorscheme 'tokyonight-night'
       vim.cmd.colorscheme 'catppuccin'
+      -- vim.cmd.colorscheme 'onedark'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'

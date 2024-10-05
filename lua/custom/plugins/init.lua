@@ -126,16 +126,13 @@ return {
   },
   { 'catppuccin/nvim', name = 'catppuccin', priority = 1000 },
   -- {
-  --   'projekt0n/github-nvim-theme',
-  --   name = 'github-theme',
-  --   lazy = false,   priority = 1000,
+  --   'navarasu/onedark.nvim',
   --   config = function()
-  --     require('github-theme').setup {
-  --       -- ...
-  --     }
-  --
-  --     vim.cmd('colorscheme github_dark_default')
-  --   end,
+  --    require('onedark').setup({
+  --       style = 'darker'
+  --     })
+  --     require('onedark').load()
+  --   end
   -- },
   {
     'ThePrimeagen/vim-be-good',
