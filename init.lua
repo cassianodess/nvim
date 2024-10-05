@@ -441,8 +441,8 @@ require('lazy').setup({
       -- vim.keymap.set('n', '<C-p>', builtin.git_files, { desc = '[F]ind [Files [C-P]' })
 
       vim.keymap.set('n', '<C-p>', function()
-        require('telescope.builtin').git_files {
-          -- find_command = { 'rg', '--ignore', '--hidden', '--no-ignore', '--files' }, -- Inclui os arquivos ocultos e ignora o .gitignore
+        require('telescope.builtin').find_files {
+          find_command = { 'rg', '--ignore', '--hidden', '--no-ignore', '--files' }, -- Inclui os arquivos ocultos e ignora o .gitignore
           prompt_prefix = '🔍 ',
         }
       end, { desc = '[F]ind [Files]' })
@@ -997,26 +997,26 @@ require('lazy').setup({
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
   { import = 'custom.plugins' },
 }, {
-    ui = {
-      -- If you are using a Nerd Font: set icons to an empty table which will use the
-      -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
-      icons = vim.g.have_nerd_font and {} or {
-        cmd = '⌘',
-        config = '🛠',
-        event = '📅',
-        ft = '📂',
-        init = '⚙',
-        keys = '🗝',
-        plugin = '🔌',
-        runtime = '💻',
-        require = '🌙',
-        source = '📄',
-        start = '🚀',
-        task = '📌',
-        lazy = '💤 ',
-      },
+  ui = {
+    -- If you are using a Nerd Font: set icons to an empty table which will use the
+    -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
+    icons = vim.g.have_nerd_font and {} or {
+      cmd = '⌘',
+      config = '🛠',
+      event = '📅',
+      ft = '📂',
+      init = '⚙',
+      keys = '🗝',
+      plugin = '🔌',
+      runtime = '💻',
+      require = '🌙',
+      source = '📄',
+      start = '🚀',
+      task = '📌',
+      lazy = '💤 ',
     },
-  })
+  },
+})
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
