@@ -92,14 +92,17 @@ P.S. You can delete this when you're done too. It's your config now! :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.cmd 'set expandtab'
-vim.cmd 'set tabstop=3'
-vim.cmd 'set softtabstop=3'
-vim.cmd 'set shiftwidth=3'
+vim.cmd 'set tabstop=4'
+vim.cmd 'set softtabstop=4'
+vim.cmd 'set shiftwidth=4'
 vim.cmd 'set number relativenumber'
 vim.cmd 'set nu rnu'
+vim.cmd([[highlight ExtraWhitespace ctermbg=red guibg=red]])
+vim.fn.matchadd('ExtraWhitespace', '\\s\\+$')
 vim.api.nvim_set_keymap('v', '<C-S-c>', '"+y', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-d>', '<C-d>zz', {})
 vim.api.nvim_set_keymap('n', '<C-u>', '<C-u>zz', {})
+
 vim.opt.swapfile = false
 vim.opt.incsearch = true
 
