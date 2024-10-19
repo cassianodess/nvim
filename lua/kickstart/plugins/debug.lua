@@ -10,6 +10,7 @@ return {
     'williamboman/mason.nvim',
     'jay-babu/mason-nvim-dap.nvim',
     'leoluz/nvim-dap-go',
+    'akinsho/flutter-tools.nvim',
   },
   keys = function(_, keys)
     local dap = require 'dap'
@@ -38,7 +39,7 @@ return {
 
     require('mason-nvim-dap').setup {
       automatic_installation = true,
-      ensure_installed = { 'delve' },
+      ensure_installed = { 'delve', 'dart' },
     }
 
     dapui.setup {
@@ -80,5 +81,24 @@ return {
         envFile = '.env',  -- Arquivo de ambiente, se necessário
       },
     }
+
+    dap.adapters.dart = {
+      type = 'executable',
+      command = os.getenv("FLUTTER_PATH") .. "/bin/flutter",
+      args = { "debug-adapter" },
+    }
+
+    dap.configurations.dart = {
+      {
+        type = "dart",
+        request = "launch",
+        name = "Launch Flutter",
+        program = "${workspaceFolder}/lib/main.dart",
+        cwd = "${workspaceFolder}",
+        flutterSdkPath = os.getenv("FLUTTER_PATH"),
+        console = "integratedTerminal",
+      },
+    }
+
   end,
 }

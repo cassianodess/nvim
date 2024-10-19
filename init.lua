@@ -97,7 +97,7 @@ vim.cmd 'set softtabstop=4'
 vim.cmd 'set shiftwidth=4'
 vim.cmd 'set number relativenumber'
 vim.cmd 'set nu rnu'
-vim.cmd([[highlight ExtraWhitespace ctermbg=red guibg=red]])
+vim.cmd [[highlight ExtraWhitespace ctermbg=red guibg=red]]
 vim.fn.matchadd('ExtraWhitespace', '\\s\\+$')
 vim.api.nvim_set_keymap('v', '<C-S-c>', '"+y', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-d>', '<C-d>zz', {})
@@ -690,6 +690,44 @@ require('lazy').setup({
       require('mason').setup()
       require('java').setup()
       require('lspconfig').jdtls.setup {}
+
+      require('flutter-tools').setup {
+        debugger = {
+          enabled = true,
+          run_via_dap = true,
+          exception_breakpoints = {},
+        },
+        flutter_path = os.getenv 'FLUTTER_PATH' .. '/bin/flutter',
+        widget_guides = {
+          enabled = true,
+        },
+        dev_tools = {
+          autostart = false,
+          auto_open_browser = false,
+        },
+        dev_log = {
+          enabled = true,
+          filter = nil, -- optional callback to filter the log
+          notify_errors = false, -- if there is an error whilst running then notify the user
+          open_cmd = 'tabedit', -- command to use to open the log buffer
+        },
+        settings = {
+          updateImportsOnRename = true,
+        },
+        fvm = false,
+      }
+
+      vim.api.nvim_create_autocmd('BufWritePost', {
+        pattern = '*.dart',
+        callback = function()
+          local dap = require 'dap'
+          if dap.session() then
+            dap.repl.append 'r'
+          end
+        end,
+      })
+      require('telescope').load_extension 'flutter'
+
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
