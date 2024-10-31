@@ -84,7 +84,7 @@ return {
       -- vim.keymap.set('n', '<C-j>', ':ToggleTerm<CR>', { noremap = true, silent = true })
       vim.keymap.set({ 'n', 'v', 'c' }, '<leader>j', ':ToggleTerm <CR>')
       vim.keymap.set('t', '<leader>j', [[<C-\><C-n>]], { noremap = true, silent = true })
-    end
+    end,
   },
   {
     'romgrk/barbar.nvim',
@@ -131,10 +131,9 @@ return {
       'nvim-lua/plenary.nvim',
       'stevearc/dressing.nvim', -- optional for vim.ui.select
     },
-    config = function ()
+    config = function()
       require('flutter-tools').setup {} -- use defaults
-
-    end
+    end,
     -- config = true,
   },
   {
@@ -196,8 +195,8 @@ return {
         options = {
           icons_enabled = true,
           theme = 'auto',
-          component_separators = { left = '', right = ''},
-          section_separators = { left = '', right = ''},
+          component_separators = { left = '', right = '' },
+          section_separators = { left = '', right = '' },
           disabled_filetypes = {
             statusline = {},
             winbar = {},
@@ -209,29 +208,65 @@ return {
             statusline = 1000,
             tabline = 1000,
             winbar = 1000,
-          }
+          },
         },
         sections = {
-          lualine_a = {'mode'},
-          lualine_b = {'branch', 'diff', 'diagnostics'},
-          lualine_c = {'filename'},
-          lualine_x = {'encoding', 'fileformat', 'filetype'},
-          lualine_y = {'progress'},
-          lualine_z = {'location'}
+          lualine_a = { 'mode' },
+          lualine_b = { 'branch', 'diff', 'diagnostics' },
+          lualine_c = { 'filename' },
+          lualine_x = { 'encoding', 'fileformat', 'filetype' },
+          lualine_y = { 'progress' },
+          lualine_z = { 'location' },
         },
         inactive_sections = {
           lualine_a = {},
           lualine_b = {},
-          lualine_c = {'filename'},
-          lualine_x = {'location'},
+          lualine_c = { 'filename' },
+          lualine_x = { 'location' },
           lualine_y = {},
-          lualine_z = {}
+          lualine_z = {},
         },
         tabline = {},
         winbar = {},
         inactive_winbar = {},
-        extensions = {}
+        extensions = {},
       }
-    end
-  }
+    end,
+  },
+  {
+    'petertriho/nvim-scrollbar',
+    config = function()
+      require('scrollbar').setup {
+        handle = {
+          size = 10,
+          color = '#6F1DCE',
+        },
+        marks = {
+          Search = { color = '#F9E2AF' },
+          Error = { color = '#F38BA8' },
+          Warn = { color = '#FAB387' },
+          Info = { color = '#89B4FA' },
+          Hint = { color = '#94E2D5' },
+          GitAdd = { color = '#A6E3A1' },
+          GitChange = { color = '#FAB387' },
+          GitDelete = { color = '#F38BA8' },
+        },
+        handlers = {
+          cursor = true,
+          diagnostic = true,
+          search = true,
+          gitsigns = true,
+        },
+        scroll = {
+          horizontal = {
+            use_default_config = true,
+            direction = 'reverse',
+          },
+          vertical = {
+            use_default_config = true,
+          },
+        },
+      }
+    end,
+  },
 }
