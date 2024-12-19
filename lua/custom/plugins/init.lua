@@ -254,7 +254,7 @@ return {
         handlers = {
           cursor = true,
           diagnostic = true,
-          search = true,
+          -- search = true,
           gitsigns = true,
         },
         scroll = {
