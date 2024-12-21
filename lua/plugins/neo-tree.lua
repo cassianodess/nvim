@@ -3,13 +3,12 @@ return {
   version = '*',
   dependencies = {
     'nvim-lua/plenary.nvim',
-    'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+    'nvim-tree/nvim-web-devicons',
     'MunifTanjim/nui.nvim',
   },
   cmd = 'Neotree',
   keys = {
     { '<leader>e', ':Neotree filesystem reveal right toggle<CR>', desc = 'Toggle NeoTree', silent = true },
-    -- { '<C-l>', ':Neotree filesystem reveal right<CR>', desc = 'Focus NeoTree and Reveal Filesystem', silent = true },
     { '<leader>te>', ':wincmd p<CR>', desc = 'Focus Buffer', silent = true },
   },
   opts = {

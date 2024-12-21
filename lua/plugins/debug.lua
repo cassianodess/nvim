@@ -1,7 +1,3 @@
--- debug.lua
---
--- Configurações para depuração de projetos Go com nvim-dap
-
 return {
   'mfussenegger/nvim-dap',
   dependencies = {
