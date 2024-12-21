@@ -7,7 +7,10 @@ return {
       "stevearc/dressing.nvim",
     },
     config = function()
-      require("flutter-tools").setup({}) -- use defaults
+      require("flutter-tools").setup({})
+      -- require("telescope").load_extension("flutter")
+      -- require("flutter-tools").setup_dap()
+
     end,
     -- config = true,
   },
