@@ -18,6 +18,14 @@ vim.api.nvim_set_keymap('v', '<C-S-c>', '"+y', { noremap = true, silent = true }
 vim.api.nvim_set_keymap('n', '<C-d>', '<C-d>zz', {})
 vim.api.nvim_set_keymap('n', '<C-u>', '<C-u>zz', {})
 
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
+
 vim.opt.swapfile = false
 vim.opt.incsearch = true
 
