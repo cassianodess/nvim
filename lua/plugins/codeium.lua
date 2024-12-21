@@ -19,10 +19,10 @@ return {
       --   return vim.fn["codeium#CycleCompletions"](-1)
       -- end, { expr = true, silent = true })
       --
-      -- -- Limpar sugestão com Ctrl+X
-      -- vim.keymap.set("i", "<c-x>", function()
-      --   return vim.fn["codeium#Clear"]()
-      -- end, { expr = true, silent = true })
+      -- Limpar sugestão com Ctrl+X
+      vim.keymap.set("i", "<C-n>", function()
+        return vim.fn["codeium#Clear"]()
+      end, { expr = true, silent = true })
     end,
   },
 }
