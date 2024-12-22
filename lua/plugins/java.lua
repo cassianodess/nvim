@@ -5,10 +5,15 @@ return {
       'folke/neoconf.nvim',
     },
     config = function()
-      require('java').setup()
+      require('java').setup({
+        jdk = {
+          auto_install = false
+        }
+      })
       require('lspconfig').jdtls.setup({
         settings = {
           java = {
+            home = os.getenv 'JAVA_HOME' .. '/usr/lib/jvm/java-21-openjdk-amd64',
             configuration = {
               runtimes = {
                 {
