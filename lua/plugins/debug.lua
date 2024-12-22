@@ -72,29 +72,45 @@ return {
         name = 'Launch Package',
         type = 'go',
         request = 'launch',
-        mode = 'debug',  -- Mude para 'debug' para iniciar a depuração
-        program = '${workspaceFolder}',  -- Diretório do seu workspace
-        envFile = '.env',  -- Arquivo de ambiente, se necessário
+        mode = 'debug', -- Mude para 'debug' para iniciar a depuração
+        program = '${workspaceFolder}', -- Diretório do seu workspace
+        envFile = '.env', -- Arquivo de ambiente, se necessário
       },
     }
 
     dap.adapters.dart = {
       type = 'executable',
-      command = os.getenv("FLUTTER_PATH") .. "/bin/flutter",
-      args = { "debug-adapter" },
+      command = os.getenv 'FLUTTER_PATH' .. '/bin/flutter',
+      args = { 'debug-adapter' },
     }
 
     dap.configurations.dart = {
       {
-        type = "dart",
-        request = "launch",
-        name = "Launch Flutter",
-        program = "${workspaceFolder}/lib/main.dart",
-        cwd = "${workspaceFolder}",
-        flutterSdkPath = os.getenv("FLUTTER_PATH"),
-        console = "integratedTerminal",
+        type = 'dart',
+        request = 'launch',
+        name = 'Launch Flutter',
+        program = '${workspaceFolder}/lib/main.dart',
+        cwd = '${workspaceFolder}',
+        flutterSdkPath = os.getenv 'FLUTTER_PATH',
+        console = 'integratedTerminal',
       },
     }
 
+    dap.adapters.java = function(callback)
+      callback {
+        type = 'server',
+        host = '127.0.0.1',
+        port = 5005,
+      }
+    end
+    dap.configurations.java = {
+      {
+        type = 'java',
+        request = 'attach',
+        name = 'Debug (Attach) - Remote',
+        hostName = '127.0.0.1',
+        port = 5005,
+      },
+    }
   end,
 }

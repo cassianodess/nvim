@@ -63,6 +63,7 @@ return {
         gopls = {},
         pyright = {},
         ts_ls = {},
+        jdtls = {},
         -- dart = {},
         html = {},
         cssls = {},
