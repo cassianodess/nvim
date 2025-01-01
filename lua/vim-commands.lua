@@ -96,5 +96,5 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Mapeamento para renomeação com o comando leader rn no arquivo atual
 vim.api.nvim_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', { noremap = true, silent = true })
-
