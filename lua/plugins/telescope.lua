@@ -17,6 +17,7 @@ return {
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
+      local actions = require('telescope.actions')
       require('telescope').setup {
         defaults = {
           file_ignore_patterns = { 'node_modules' },
@@ -33,6 +34,18 @@ return {
             '--no-ignore',
             '--glob',
             '!.git/',
+          },
+          mappings = {
+            i = {
+              -- Mapear a seleção padrão para sair do modo insert
+              ['<CR>'] = function(prompt_bufnr)
+                actions.select_default(prompt_bufnr)
+                vim.cmd 'stopinsert' -- Sai do modo insert
+              end,
+            },
+            n = {
+              ['<CR>'] = actions.select_default, -- Normal mode já funciona como esperado
+            },
           },
         },
         extensions = {
