@@ -19,6 +19,17 @@ return {
     config = function()
       local actions = require('telescope.actions')
       require('telescope').setup {
+        pickers = {
+          find_files = {
+            previewer = false,
+            hidden = true,
+          },
+          live_grep = {
+            layout_config = {
+              preview_width = 0,
+            }
+          },
+        },
         defaults = {
           file_ignore_patterns = { 'node_modules' },
           prompt_prefix = '🔍 ',
