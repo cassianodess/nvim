@@ -10,6 +10,9 @@ vim.cmd 'set wrap'
 vim.cmd 'set linebreak'
 vim.cmd 'set showbreak=+++'
 vim.cmd [[highlight ExtraWhitespace ctermbg=red guibg=red]]
+vim.cmd 'set autoindent'
+vim.opt.termguicolors = true
+
 vim.fn.matchadd('ExtraWhitespace', '\\s\\+$')
 vim.api.nvim_set_keymap('v', '<C-S-c>', '"+y', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-d>', '<C-d>zz', {})
@@ -52,7 +55,11 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.listchars = {
+    -- tab = '» ',
+    trail = '·',
+    nbsp = '␣'
+}
 
 vim.opt.inccommand = 'split'
 
@@ -63,6 +70,18 @@ vim.opt.scrolloff = 10
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+--
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "java",
+  callback = function()
+    vim.b.sleuth_automatic = false -- Desativa o vim-sleuth para arquivos Java
+    vim.opt_local.expandtab = true
+    vim.opt_local.tabstop = 4
+    vim.opt_local.softtabstop = 4
+    vim.opt_local.shiftwidth = 4
+  end,
+})
 
 vim.keymap.set('n', '<leader>q', function()
   local quickfix_open = false
