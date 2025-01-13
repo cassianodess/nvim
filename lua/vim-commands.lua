@@ -69,8 +69,13 @@ vim.opt.scrolloff = 10
 
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.hlsearch = true
+vim.opt.incsearch = true
+
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
---
+
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "java",
@@ -82,6 +87,14 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.shiftwidth = 4
   end,
 })
+
+
+vim.api.nvim_create_autocmd('DiagnosticChanged', {
+  callback = function()
+    vim.diagnostic.setqflist({ open = false })  -- Atualiza a lista de quickfix
+  end,
+})
+
 
 vim.keymap.set('n', '<leader>q', function()
   local quickfix_open = false
@@ -115,5 +128,4 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
--- Mapeamento para renomeação com o comando leader rn no arquivo atual
-vim.api.nvim_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'LSP Rename Symbol' })

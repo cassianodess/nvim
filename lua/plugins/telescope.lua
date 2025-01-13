@@ -82,6 +82,16 @@ return {
       vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[F]ind [R]esume' })
       vim.keymap.set('n', '<leader>f/', builtin.oldfiles, { desc = '[F]ind Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+      vim.keymap.set('n', '<leader>ch', '<cmd>Telescope command_history<CR>', { desc = 'Telescope [C]ommand [H]istory' })
+
+
+
+      -- vim.keymap.set('n', '<leader>gs', '<cmd>Git<CR>', { desc = '[G]it [S]tatus' })
+      -- vim.keymap.set('n', '<leader>gl', '<cmd>Telescope git_commits<CR>', { desc = '[G]it [L]og' })
+      -- vim.keymap.set('n', '<leader>gc', '<cmd>Telescope git_bcommits<CR>', { desc = '[G]it [C]ommits' })
+      -- vim.keymap.set('n', '<leader>gb', '<cmd>Telescope git_branches<CR>', { desc = '[G]it [B]ranches' })
+      vim.keymap.set('n', '<leader>gd', '<cmd>Gitsigns preview_hunk_inline<CR>', { desc = '[G]it [D]iff' })
+
 
       vim.keymap.set('n', '<leader>/', function()
         builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
