@@ -21,17 +21,21 @@ return {
       require('telescope').setup {
         pickers = {
           find_files = {
-            previewer = false,
+            previewer = true,
             hidden = true,
+            no_ignore = true
+
           },
           live_grep = {
             layout_config = {
-              preview_width = 0,
+              -- preview_width = 0,
             }
           },
         },
         defaults = {
-          file_ignore_patterns = { 'node_modules' },
+          previewer = true,
+          hidden = true,
+          file_ignore_patterns = { 'node_modules', 'android', 'ios',  },
           prompt_prefix = '🔍 ',
           vimgrep_arguments = {
             'rg',
@@ -73,8 +77,15 @@ return {
       vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[F]ind [H]elp' })
       vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = '[F]ind [K]eymaps' })
 
-      vim.keymap.set('n', '<C-p>', builtin.find_files, { desc = 'Telescope find files' })
-      vim.keymap.set('n', '<leader>gf', builtin.git_files, { desc = 'Telescope [G]it [F]iles' })
+      -- vim.keymap.set('n', '<C-p>', builtin.find_files, { desc = 'Telescope find files' })
+
+      vim.keymap.set('n', '<C-p>', function ()
+        local telescope = require('telescope.builtin')
+        telescope.find_files { hidden = true }
+        
+      end, { desc = 'Telescope find files' })
+
+      -- vim.keymap.set('n', '<leader>gf', builtin.git_files, { desc = 'Telescope [G]it [F]iles' })
       vim.keymap.set('n', '<leader>fs', builtin.builtin, { desc = '[F]ind [S]elect Telescope' })
       vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = '[F]ind current [W]ord' })
       vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '[F]ind by [G]rep' })

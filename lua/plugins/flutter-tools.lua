@@ -4,7 +4,7 @@ return {
     lazy = false,
     dependencies = {
       'nvim-lua/plenary.nvim',
-      'stevearc/dressing.nvim', -- optional for vim.ui.select
+      'stevearc/dressing.nvim',
     },
     config = function()
       require('telescope').load_extension 'flutter'
@@ -24,10 +24,10 @@ return {
           auto_open_browser = false,
         },
         dev_log = {
-          enabled = true,
-          filter = nil, -- optional callback to filter the log
-          notify_errors = false, -- if there is an error whilst running then notify the user
-          open_cmd = 'tabedit', -- command to use to open the log buffer
+          enabled = false,
+          filter = nil,
+          notify_errors = true,
+          open_cmd = 'tabedit',
         },
         settings = {
           updateImportsOnRename = true,

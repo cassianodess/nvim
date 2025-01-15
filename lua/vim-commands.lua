@@ -13,7 +13,7 @@ vim.cmd [[highlight ExtraWhitespace ctermbg=red guibg=red]]
 vim.cmd 'set autoindent'
 vim.opt.termguicolors = true
 
-vim.fn.matchadd('ExtraWhitespace', '\\s\\+$')
+-- vim.fn.matchadd('ExtraWhitespace', '\\s\\+$')
 vim.api.nvim_set_keymap('v', '<C-S-c>', '"+y', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-d>', '<C-d>zz', {})
 vim.api.nvim_set_keymap('n', '<C-u>', '<C-u>zz', {})
@@ -69,8 +69,6 @@ vim.opt.scrolloff = 10
 
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 
