@@ -24,7 +24,7 @@ return {
           auto_open_browser = false,
         },
         dev_log = {
-          enabled = false,
+          enabled = true,
           filter = nil,
           notify_errors = true,
           open_cmd = 'tabedit',

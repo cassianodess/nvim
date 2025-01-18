@@ -5,7 +5,14 @@ return {
       require('auto-session').setup {
         suppressed_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
         session_lens = {
-          buftypes_to_ignore = {},
+          buftypes_to_ignore = {
+            'terminal',
+            'nofile',
+            'quickfix',
+            'prompt',
+            'help',
+            'log',
+          },
           load_on_setup = true,
           theme_conf = { border = true },
           previewer = false,

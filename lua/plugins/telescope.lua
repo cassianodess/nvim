@@ -21,10 +21,9 @@ return {
       require('telescope').setup {
         pickers = {
           find_files = {
-            previewer = true,
-            hidden = true,
-            no_ignore = true
-
+            -- previewer = true,
+            -- hidden = false,
+            -- no_ignore = true
           },
           live_grep = {
             layout_config = {
@@ -77,14 +76,12 @@ return {
       vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[F]ind [H]elp' })
       vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = '[F]ind [K]eymaps' })
 
-      -- vim.keymap.set('n', '<C-p>', builtin.find_files, { desc = 'Telescope find files' })
-
-      vim.keymap.set('n', '<C-p>', function ()
+      vim.keymap.set('n', '<C-p>', builtin.find_files, { desc = 'Telescope find files' })
+      vim.keymap.set('n', '<leader>gf', function ()
         local telescope = require('telescope.builtin')
         telescope.find_files { hidden = true }
         
-      end, { desc = 'Telescope find files' })
-
+      end, { desc = 'Telescope [G]it [F]iles' })
       -- vim.keymap.set('n', '<leader>gf', builtin.git_files, { desc = 'Telescope [G]it [F]iles' })
       vim.keymap.set('n', '<leader>fs', builtin.builtin, { desc = '[F]ind [S]elect Telescope' })
       vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = '[F]ind current [W]ord' })

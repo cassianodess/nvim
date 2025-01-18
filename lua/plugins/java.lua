@@ -11,8 +11,10 @@ return {
         }
       })
       require('lspconfig').jdtls.setup({
+        flags = { debounce_text_changes = 150 },
         settings = {
           java = {
+            format = { enabled = false },
             home = os.getenv 'JAVA_HOME' .. '/usr/lib/jvm/java-21-openjdk-amd64',
             configuration = {
               runtimes = {

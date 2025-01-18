@@ -13,11 +13,16 @@ vim.cmd [[highlight ExtraWhitespace ctermbg=red guibg=red]]
 vim.cmd 'set autoindent'
 vim.opt.termguicolors = true
 
--- vim.fn.matchadd('ExtraWhitespace', '\\s\\+$')
+vim.fn.matchadd('ExtraWhitespace', '\\s\\+$')
 vim.api.nvim_set_keymap('v', '<C-S-c>', '"+y', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-d>', '<C-d>zz', {})
 vim.api.nvim_set_keymap('n', '<C-u>', '<C-u>zz', {})
 vim.api.nvim_set_keymap('n', '<C-a>', 'ggVG', { silent = true, noremap = true })
+
+
+vim.opt.lazyredraw = true -- Reduz atualizações de tela durante execução de macros
+vim.opt.synmaxcol = 200   -- Limita o número de colunas analisadas pela syntax
+vim.opt.updatetime = 300  -- Reduz o tempo de espera para atualizações
 
 vim.opt.swapfile = false
 vim.opt.incsearch = true
