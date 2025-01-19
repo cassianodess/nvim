@@ -21,7 +21,7 @@ return {
       require('telescope').setup {
         pickers = {
           find_files = {
-            -- previewer = true,
+            previewer = true,
             -- hidden = false,
             -- no_ignore = true
           },
@@ -80,7 +80,7 @@ return {
       vim.keymap.set('n', '<leader>gf', function ()
         local telescope = require('telescope.builtin')
         telescope.find_files { hidden = true }
-        
+
       end, { desc = 'Telescope [G]it [F]iles' })
       -- vim.keymap.set('n', '<leader>gf', builtin.git_files, { desc = 'Telescope [G]it [F]iles' })
       vim.keymap.set('n', '<leader>fs', builtin.builtin, { desc = '[F]ind [S]elect Telescope' })
@@ -88,7 +88,22 @@ return {
       vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '[F]ind by [G]rep' })
       vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = '[F]ind [D]iagnostics' })
       vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[F]ind [R]esume' })
-      vim.keymap.set('n', '<leader>f/', builtin.oldfiles, { desc = '[F]ind Recent Files ("." for repeat)' })
+      vim.keymap.set('n', '<leader>fc', builtin.colorscheme, { desc = '[F]ind [C]olorscheme' })
+
+      vim.keymap.set('n', '<leader>cf', function()
+        builtin.find_files({
+          prompt_title = "< Config Files >",
+          cwd = "~/.config/nvim", -- Diretório onde estão os arquivos de configuração
+          hidden = true, -- Inclui arquivos ocultos, como .gitignore
+        })
+      end, { desc = "[C]onfig [F]iles" })
+
+      vim.keymap.set('n', '<leader>rf', function()
+        builtin.oldfiles {
+          cwd_only = true, -- Limita aos arquivos do diretório atual
+          cwd = vim.fn.getcwd(), -- Define o diretório atual como contexto
+        }
+      end, { desc = '[R]ecent [F]iles (current directory)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
       vim.keymap.set('n', '<leader>ch', '<cmd>Telescope command_history<CR>', { desc = 'Telescope [C]ommand [H]istory' })
 

@@ -31,6 +31,8 @@ return {
         },
         settings = {
           updateImportsOnRename = true,
+          showTodos = true,
+          completeFunctionCalls = true,
         },
         fvm = false,
       } -- use defaults
