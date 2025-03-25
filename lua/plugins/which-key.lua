@@ -11,6 +11,10 @@ return {
           Left = '<Left> ',
           Right = '<Right> ',
           C = '<C-…> ',
+           
+
+
+
           M = '<M-…> ',
           D = '<D-…> ',
           S = '<S-…> ',
@@ -49,3 +53,5 @@ return {
     },
   },
 }
+
+

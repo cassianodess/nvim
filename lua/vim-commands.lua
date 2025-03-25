@@ -9,15 +9,19 @@ vim.cmd 'set nu rnu'
 vim.cmd 'set wrap'
 vim.cmd 'set linebreak'
 vim.cmd 'set showbreak=+++'
-vim.cmd [[highlight ExtraWhitespace ctermbg=red guibg=red]]
+vim.cmd 'set foldmethod=indent'
+vim.cmd 'set foldlevelstart=99'
+
 vim.cmd 'set autoindent'
 vim.opt.termguicolors = true
 
+vim.cmd [[highlight ExtraWhitespace ctermbg=red guibg=red]]
 vim.fn.matchadd('ExtraWhitespace', '\\s\\+$')
+
 vim.api.nvim_set_keymap('v', '<C-S-c>', '"+y', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-d>', '<C-d>zz', {})
 vim.api.nvim_set_keymap('n', '<C-u>', '<C-u>zz', {})
-vim.api.nvim_set_keymap('n', '<C-a>', 'ggVG', { silent = true, noremap = true })
+-- vim.api.nvim_set_keymap('n', '<C-a>', 'ggVG', { silent = true, noremap = true })
 
 
 vim.opt.lazyredraw = true -- Reduz atualizações de tela durante execução de macros
@@ -37,7 +41,8 @@ vim.keymap.set('n', 'N', 'Nzzzv')
 vim.g.have_nerd_font = true
 
 vim.opt.number = true
-vim.opt.mouse = 'a'
+-- vim.opt.mouse = 'a'
+vim.cmd 'set mouse=a'
 vim.opt.showmode = false
 vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
@@ -48,7 +53,7 @@ vim.opt.breakindent = true
 vim.opt.undofile = true
 
 vim.opt.ignorecase = true
-vim.opt.smartcase = true
+-- vim.opt.smartcase = true
 
 vim.opt.signcolumn = 'yes'
 
@@ -80,16 +85,16 @@ vim.opt.incsearch = true
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "java",
-  callback = function()
-    vim.b.sleuth_automatic = false -- Desativa o vim-sleuth para arquivos Java
-    vim.opt_local.expandtab = true
-    vim.opt_local.tabstop = 4
-    vim.opt_local.softtabstop = 4
-    vim.opt_local.shiftwidth = 4
-  end,
-})
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = "java",
+--   callback = function()
+--     vim.b.sleuth_automatic = false -- Desativa o vim-sleuth para arquivos Java
+--     vim.opt_local.expandtab = true
+--     vim.opt_local.tabstop = 4
+--     vim.opt_local.softtabstop = 4
+--     vim.opt_local.shiftwidth = 4
+--   end,
+-- })
 
 
 vim.api.nvim_create_autocmd('DiagnosticChanged', {

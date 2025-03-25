@@ -34,7 +34,13 @@ return {
         defaults = {
           previewer = true,
           hidden = true,
-          file_ignore_patterns = { 'node_modules', 'android', 'ios',  },
+          file_ignore_patterns = {
+            'node_modules', 'android', 'ios',
+            "%.log",
+            "%.tmp",
+            "%.bak",
+            "%.bin"
+          },
           prompt_prefix = '🔍 ',
           vimgrep_arguments = {
             'rg',
@@ -43,11 +49,9 @@ return {
             '--with-filename',
             '--line-number',
             '--column',
-            '--smart-case',
-            '--hidden',
-            '--no-ignore',
-            '--glob',
-            '!.git/',
+            '--ignore-case',
+            '--max-filesize', '1M',
+            '--max-count', '100',
           },
           mappings = {
             i = {
@@ -79,7 +83,7 @@ return {
       vim.keymap.set('n', '<C-p>', builtin.find_files, { desc = 'Telescope find files' })
       vim.keymap.set('n', '<leader>gf', function ()
         local telescope = require('telescope.builtin')
-        telescope.find_files { hidden = true }
+        telescope.find_files { hidden = true, no_ignore = true }
 
       end, { desc = 'Telescope [G]it [F]iles' })
       -- vim.keymap.set('n', '<leader>gf', builtin.git_files, { desc = 'Telescope [G]it [F]iles' })

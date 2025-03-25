@@ -35,7 +35,7 @@ return {
 
     require('mason-nvim-dap').setup {
       automatic_installation = true,
-      ensure_installed = { 'delve', 'dart' },
+      ensure_installed = { 'delve', 'dart', 'java', 'js-debug-adapter' },
     }
 
     dapui.setup {
@@ -62,19 +62,20 @@ return {
 
     require('dap-go').setup {
       delve = {
-        detached = vim.fn.has 'win32' == 0,
+        -- detached = vim.fn.has 'win32' == 0,
+        detached = false,
       },
     }
 
     -- Configurações para depuração de pacotes Go
     dap.configurations.go = {
       {
-        name = 'Launch Package',
+        name = 'Debug Go Vim',
         type = 'go',
         request = 'launch',
         mode = 'debug', -- Mude para 'debug' para iniciar a depuração
         program = '${workspaceFolder}', -- Diretório do seu workspace
-        envFile = '.env', -- Arquivo de ambiente, se necessário
+        envFile = '${workspaceFolder}/.env', -- Arquivo de ambiente, se necessário
       },
     }
 
@@ -82,6 +83,46 @@ return {
       type = 'executable',
       command = os.getenv 'FLUTTER_PATH' .. '/bin/flutter',
       args = { 'debug-adapter' },
+    }
+
+    dap.adapters.node2 = {
+      type = 'executable',
+      command = 'node',
+      host = '127.0.0.1',
+      port = 9229,
+      args = {
+        os.getenv('HOME') .. '/.local/share/nvim/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js'
+      },
+    }
+    --
+    -- dap.adapters.node2 = {
+    --   type = 'server',
+    --   host = '127.0.0.1',
+    --   port = 9229, -- Mesma porta usada pelo --inspect
+    -- }
+
+    dap.configurations.javascript = {
+      {
+        name = 'Debug Node',
+        type = 'node2',
+        request = 'attach',
+        program = '${file}',
+        cwd = vim.fn.getcwd(),
+        sourceMaps = true,
+        protocol = 'inspector',
+        console = 'integratedTerminal',
+      },
+      {
+        name = 'Attach to Cloud Function',
+        type = 'node2',
+        request = 'attach',
+        address = '127.0.0.1',
+        port = 9229, -- Mesma porta usada pelo --inspect
+        restart = true,
+        sourceMaps = true,
+        protocol = 'inspector',
+        console = 'integratedTerminal',
+      },
     }
 
     dap.configurations.dart = {
