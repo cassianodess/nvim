@@ -1,9 +1,18 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-vim.cmd 'set expandtab'
-vim.cmd 'set tabstop=4'
-vim.cmd 'set softtabstop=4'
-vim.cmd 'set shiftwidth=4'
+--
+-- Configuração global de indentação
+vim.opt.expandtab = true        -- Usa espaços ao invés de tabs
+vim.opt.tabstop = 2             -- Define o número de espaços por tabulação
+vim.opt.softtabstop = 2         -- Usa o mesmo número de espaços para o soft tab
+vim.opt.shiftwidth = 2          -- Indentação de 4 espaços por nível
+vim.opt.smartindent = true      -- Ativa indentação inteligente
+vim.opt.autoindent = true       -- Ativa indentação automática
+vim.opt.smarttab = true         -- Ativa tabulação inteligente
+
+vim.g.sleuth_autostart = false
+vim.g.sleuth_automatic = false
+
 vim.cmd 'set number relativenumber'
 vim.cmd 'set nu rnu'
 vim.cmd 'set wrap'
@@ -12,7 +21,6 @@ vim.cmd 'set showbreak=+++'
 vim.cmd 'set foldmethod=indent'
 vim.cmd 'set foldlevelstart=99'
 
-vim.cmd 'set autoindent'
 vim.opt.termguicolors = true
 
 vim.cmd [[highlight ExtraWhitespace ctermbg=red guibg=red]]

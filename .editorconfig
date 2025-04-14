@@ -1,0 +1,42 @@
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = false
+charset = utf-8
+trim_trailing_whitespace = true
+
+# Default indentation
+indent_style = space
+indent_size = 2
+
+[*.java]
+indent_size = 4
+
+[*.go]
+indent_style = tab
+indent_size = 4
+
+[*.py]
+indent_size = 4
+
+[*.lua]
+indent_size = 2
+
+[*.dart]
+indent_size = 2
+
+[*.js]
+indent_size = 2
+
+[*.ts]
+indent_size = 2
+
+[*.html]
+indent_size = 2
+
+[*.css]
+indent_size = 2
+
+[*.json]
+indent_size = 2
