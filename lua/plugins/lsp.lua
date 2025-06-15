@@ -86,6 +86,7 @@ return {
 				},
 				pyright = {},
 				ts_ls = {},
+        marksman = {},
 				jdtls = {
 					flags = { debounce_text_changes = 150 },
 					settings = {
