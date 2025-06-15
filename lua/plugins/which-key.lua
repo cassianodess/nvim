@@ -11,7 +11,7 @@ return {
           Left = '<Left> ',
           Right = '<Right> ',
           C = '<C-…> ',
-           
+
 
 
 
@@ -49,9 +49,9 @@ return {
         { '<leader>w', group = '[W]orkspace' },
         { '<leader>t', group = '[T]oggle' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+        { '<leader>tw', group = '[T]ralling [W]hitespace' },
       },
     },
   },
 }
-
 
