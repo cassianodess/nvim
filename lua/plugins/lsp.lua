@@ -86,31 +86,7 @@ return {
 				},
 				pyright = {},
 				ts_ls = {},
-        marksman = {},
-				jdtls = {
-					flags = { debounce_text_changes = 150 },
-					settings = {
-						java = {
-							format = { enabled = false },
-							configuration = {
-								runtimes = {
-									{
-										name = "JavaSE-21",
-										path = os.getenv("JAVA_HOME_21") or "/usr/lib/jvm/java-21-openjdk-amd64",
-									},
-									{
-										name = "JavaSE-17",
-										path = os.getenv("JAVA_HOME") or "/usr/lib/jvm/java-17-openjdk-amd64",
-									},
-									{
-										name = "JavaSE-11",
-										path = os.getenv("JAVA_HOME_11") or "/usr/lib/jvm/java-11-openjdk-amd64",
-									},
-								},
-							},
-						},
-					},
-				},
+				jdtls = {},
 				-- dart = {},
 				html = {},
 				cssls = {},
