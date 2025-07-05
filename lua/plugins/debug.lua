@@ -76,6 +76,7 @@ return {
 				mode = "debug", -- Mude para 'debug' para iniciar a depuração
 				program = "${workspaceFolder}", -- Diretório do seu workspace
 				envFile = "${workspaceFolder}/.env", -- Arquivo de ambiente, se necessário
+        console = "integratedTerminal",
 			},
 		}
 

@@ -84,6 +84,7 @@ return {
 						},
 					},
 				},
+        angularls = {},
 				pyright = {},
 				ts_ls = {},
 				jdtls = {},
