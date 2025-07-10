@@ -84,12 +84,14 @@ return {
 						},
 					},
 				},
-        angularls = {},
+				angularls = {
+					filetypes = { "html", "typescript", "htmlangular" },
+				},
 				pyright = {},
 				ts_ls = {},
 				jdtls = {},
 				-- dart = {},
-				html = {},
+				-- html = {},
 				cssls = {},
 				lua_ls = {
 					settings = {
@@ -101,6 +103,15 @@ return {
 					},
 				},
 			}
+
+			vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+				pattern = "*.component.html",
+				callback = function()
+					if vim.bo.filetype == "htmlangular" then
+						vim.bo.filetype = "html"
+					end
+				end,
+			})
 
 			require("mason").setup()
 			vim.api.nvim_create_autocmd("BufWritePost", {

@@ -1,5 +1,6 @@
 return {
   {
+    -- Quando o jdtls parar de funcionar, é só remover o .cache
     -- rm -rf .cache/jdtls/workspace
     'nvim-java/nvim-java',
     dependencies = {
@@ -20,7 +21,7 @@ return {
                 },
                 {
                   name = 'JavaSE-17',
-                  path = os.getenv 'JAVA_HOME',
+                  path = os.getenv 'JAVA_HOME_17',
                 },
                 {
                   name = 'JavaSE-21',
