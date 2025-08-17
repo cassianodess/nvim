@@ -148,3 +148,9 @@ vim.keymap.set("n", "<leader>tw", [[:%s/\s\+$//e<CR>]], { desc = "Trim trailing 
 --     vim.cmd("Ex")
 --   end
 -- end, { desc = "Toggle File [E]xplorer" })
+--
+
+vim.keymap.set("n", "<leader>sr", function()
+	vim.cmd("source " .. vim.fn.expand("%"))
+	print("File Sourced!")
+end, { desc = "Source current file" })
