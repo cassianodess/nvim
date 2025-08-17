@@ -140,7 +140,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "LSP Rename Symbol" })
-vim.keymap.set("n", "<leader>tw", [[:%s/\s\+$//e<CR>]], { desc = "Trim trailing whitespace" })
+vim.keymap.set("n", "<leader>tw", [[:%s/\s\+$//e<CR>]], { desc = "[T]rim [W]hitespace" })
 -- vim.keymap.set("n", "<leader>e", function()
 --   if vim.bo.filetype == "netrw" then
 --     vim.cmd("bd")

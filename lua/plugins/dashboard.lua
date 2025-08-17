@@ -52,9 +52,9 @@ return {
 				dashboard.button("q", "  Quit Neovim", ":qa<CR>"),
 			}
 
-			vim.cmd(
-				[[ au BufDelete * if empty(filter(tabpagebuflist(), '!buflisted(v:val)')) && winnr('$') == 1 | exec 'Alpha' | endif ]]
-			)
+			-- vim.cmd(
+			-- 	[[ au BufDelete * if empty(filter(tabpagebuflist(), '!buflisted(v:val)')) && winnr('$') == 1 | exec 'Alpha' | endif ]]
+			-- )
 		end,
 	},
 }
