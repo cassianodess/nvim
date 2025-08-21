@@ -1,17 +1,17 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
---
--- Configuração global de indentação
-vim.opt.expandtab = false -- Usa espaços ao invés de tabs
-vim.opt.tabstop = 2 -- Define o número de espaços por tabulação
-vim.opt.softtabstop = 2 -- Usa o mesmo número de espaços para o soft tab
-vim.opt.shiftwidth = 2 -- Indentação de 4 espaços por nível
-vim.opt.smartindent = true -- Ativa indentação inteligente
-vim.opt.autoindent = true -- Ativa indentação automática
-vim.opt.smarttab = true -- Ativa tabulação inteligente
+-- Indentation
+vim.opt.expandtab = false
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.smartindent = true
+vim.opt.autoindent = true
+vim.opt.smarttab = true
 
 vim.g.sleuth_autostart = false
 vim.g.sleuth_automatic = false
+--
 
 vim.cmd("set number relativenumber")
 vim.cmd("set nu rnu")
