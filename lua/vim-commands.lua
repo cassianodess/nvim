@@ -16,6 +16,7 @@ vim.g.sleuth_automatic = false
 vim.cmd("set number relativenumber")
 vim.cmd("set nu rnu")
 vim.cmd("set wrap")
+-- vim.opt.wrap = false
 vim.cmd("set linebreak")
 vim.cmd("set showbreak=+++")
 vim.cmd("set foldmethod=indent")
@@ -154,3 +155,48 @@ vim.keymap.set("n", "<leader>sr", function()
 	vim.cmd("source " .. vim.fn.expand("%"))
 	print("File Sourced!")
 end, { desc = "Source current file" })
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "java",
+	callback = function()
+		vim.b.sleuth_automatic = false
+		vim.opt_local.expandtab = true
+		vim.opt_local.tabstop = 4
+		vim.opt_local.softtabstop = 4
+		vim.opt_local.shiftwidth = 4
+	end,
+})
+
+vim.api.nvim_create_autocmd("TermOpen", {
+	group = vim.api.nvim_create_augroup("kickstart-terminal", { clear = true }),
+	callback = function()
+		vim.opt_local.number = false
+		vim.opt_local.relativenumber = false
+		vim.opt_local.signcolumn = "no"
+    vim.cmd("highlight clear ExtraWhitespace")
+	end,
+})
+
+
+--control variables for terminal
+local term_buf = nil
+local term_win = nil
+
+vim.keymap.set("n", "<leader>j", function()
+  if term_buf and vim.api.nvim_buf_is_valid(term_buf) then
+    if term_win and vim.api.nvim_win_is_valid(term_win) then
+      vim.api.nvim_win_hide(term_win)
+      term_win = nil
+    else
+      vim.cmd("botright split")
+      term_win = vim.api.nvim_get_current_win()
+      vim.api.nvim_win_set_height(term_win, 15)
+      vim.api.nvim_win_set_buf(term_win, term_buf)
+    end
+  else
+    vim.cmd("botright split | term")
+    term_win = vim.api.nvim_get_current_win()
+    term_buf = vim.api.nvim_win_get_buf(term_win)
+    vim.api.nvim_win_set_height(term_win, 15)
+  end
+end, { desc = "Toggle Terminal" })

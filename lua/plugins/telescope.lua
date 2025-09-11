@@ -56,6 +56,8 @@ return {
 						"1M",
 						"--max-count",
 						"100",
+      --       "--smart-case",
+						-- "--regexp",
 					},
 					mappings = {
 						i = {
@@ -96,7 +98,7 @@ return {
 			vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "[F]ind [D]iagnostics" })
 			vim.keymap.set("n", "<leader>fr", builtin.resume, { desc = "[F]ind [R]esume" })
 			vim.keymap.set("n", "<leader>fc", builtin.colorscheme, { desc = "[F]ind [C]olorscheme" })
-      vim.keymap.set("n", "gi", builtin.lsp_implementations, { desc = "Telescope [G]oto [I]mplementation" })
+			vim.keymap.set("n", "gi", builtin.lsp_implementations, { desc = "Telescope [G]oto [I]mplementation" })
 
 			vim.keymap.set("n", "<leader>cf", function()
 				builtin.find_files({
@@ -126,6 +128,8 @@ return {
 			-- vim.keymap.set('n', '<leader>gc', '<cmd>Telescope git_bcommits<CR>', { desc = '[G]it [C]ommits' })
 			-- vim.keymap.set('n', '<leader>gb', '<cmd>Telescope git_branches<CR>', { desc = '[G]it [B]ranches' })
 			vim.keymap.set("n", "<leader>gd", "<cmd>Gitsigns preview_hunk_inline<CR>", { desc = "[G]it [D]iff" })
+
+      vim.keymap.set("n", "<leader>h", "<cmd>Telescope help_tags<CR>", { desc = "Telescope [H]elp" })
 
 			vim.keymap.set("n", "<leader>/", function()
 				builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
