@@ -1,7 +1,7 @@
 return {
   {
     'akinsho/toggleterm.nvim',
-    enabled = false,
+    enabled = true,
     version = '*',
     config = function()
       local toggleterm = require 'toggleterm'

@@ -178,25 +178,27 @@ vim.api.nvim_create_autocmd("TermOpen", {
 })
 
 
---control variables for terminal
-local term_buf = nil
-local term_win = nil
+vim.keymap.set("n", "<M-j>", "<cmd>cnext<CR>", { desc = "Next [Q]uickfix" })
+vim.keymap.set("n", "<M-k>", "<cmd>cprevious<CR>", { desc = "Previous [Q]uickfix" })
 
-vim.keymap.set("n", "<leader>j", function()
-  if term_buf and vim.api.nvim_buf_is_valid(term_buf) then
-    if term_win and vim.api.nvim_win_is_valid(term_win) then
-      vim.api.nvim_win_hide(term_win)
-      term_win = nil
-    else
-      vim.cmd("botright split")
-      term_win = vim.api.nvim_get_current_win()
-      vim.api.nvim_win_set_height(term_win, 15)
-      vim.api.nvim_win_set_buf(term_win, term_buf)
-    end
-  else
-    vim.cmd("botright split | term")
-    term_win = vim.api.nvim_get_current_win()
-    term_buf = vim.api.nvim_win_get_buf(term_win)
-    vim.api.nvim_win_set_height(term_win, 15)
-  end
-end, { desc = "Toggle Terminal" })
+--control variables for terminal
+-- local term_buf = nil
+-- local term_win = nil
+-- vim.keymap.set("n", "<leader>j", function()
+--   if term_buf and vim.api.nvim_buf_is_valid(term_buf) then
+--     if term_win and vim.api.nvim_win_is_valid(term_win) then
+--       vim.api.nvim_win_hide(term_win)
+--       term_win = nil
+--     else
+--       vim.cmd("botright split")
+--       term_win = vim.api.nvim_get_current_win()
+--       vim.api.nvim_win_set_height(term_win, 15)
+--       vim.api.nvim_win_set_buf(term_win, term_buf)
+--     end
+--   else
+--     vim.cmd("botright split | term")
+--     term_win = vim.api.nvim_get_current_win()
+--     term_buf = vim.api.nvim_win_get_buf(term_win)
+--     vim.api.nvim_win_set_height(term_win, 15)
+--   end
+-- end, { desc = "Toggle Terminal" })
