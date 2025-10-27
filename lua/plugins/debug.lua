@@ -32,6 +32,28 @@ return {
 	config = function()
 		local dap = require("dap")
 		local dapui = require("dapui")
+		local fluttertools = require("flutter-tools")
+		fluttertools.setup({
+			flutter_path = os.getenv("FLUTTER_PATH") .. "/bin/flutter",
+			dev_log = {
+				enabled = true,
+				focus_on_open = true,
+        open_cmd = "tabedit",
+        notify_errors = true,
+        filter = nil,
+			},
+			lsp = {
+				color = {
+					enabled = true,
+					virtual_text = true,
+					virtual_text_str = "■",
+				},
+				settings = {
+					showTodos = true,
+					updateImportsOnRename = true,
+				},
+			},
+		})
 
 		require("mason-nvim-dap").setup({
 			automatic_installation = true,
@@ -39,6 +61,11 @@ return {
 		})
 
 		local function load_env(file)
+			local isGolangProject = vim.fn.filereadable(file)
+			if isGolangProject == 0 then
+				return {}
+			end
+
 			local env = {}
 			for line in io.lines(file) do
 				for key, value in string.gmatch(line, "([%w_]+)=([^\n]+)") do
@@ -131,6 +158,7 @@ return {
 				cwd = "${workspaceFolder}",
 				flutterSdkPath = os.getenv("FLUTTER_PATH"),
 				console = "integratedTerminal",
+				showLog = true,
 			},
 		}
 
