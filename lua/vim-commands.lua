@@ -173,10 +173,9 @@ vim.api.nvim_create_autocmd("TermOpen", {
 		vim.opt_local.number = false
 		vim.opt_local.relativenumber = false
 		vim.opt_local.signcolumn = "no"
-    vim.cmd("highlight clear ExtraWhitespace")
+		vim.cmd("highlight clear ExtraWhitespace")
 	end,
 })
-
 
 vim.keymap.set("n", "<M-j>", "<cmd>cnext<CR>", { desc = "Next [Q]uickfix" })
 vim.keymap.set("n", "<M-k>", "<cmd>cprevious<CR>", { desc = "Previous [Q]uickfix" })
@@ -202,3 +201,4 @@ vim.keymap.set("n", "<M-k>", "<cmd>cprevious<CR>", { desc = "Previous [Q]uickfix
 --     vim.api.nvim_win_set_height(term_win, 15)
 --   end
 -- end, { desc = "Toggle Terminal" })
+--
