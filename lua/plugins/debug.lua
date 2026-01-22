@@ -26,40 +26,6 @@ return {
 			},
 			{ "<F7>", dapui.toggle, desc = "Debug: See last session result." },
 			{ "<leader>u", dapui.toggle, desc = "Debug: Toggle DAP UI" },
-
-			{
-				"<leader>dw",
-				function()
-					require("dap").continue({ name = "Debug WildFly" })
-				end,
-				desc = "Debug: WildFly",
-			},
-			{
-				"<leader>ws",
-				function()
-					local handle = io.popen('pgrep -f "wildfly-16.0.0.Final"')
-					local result = handle:read("*a")
-					handle:close()
-
-					if result ~= "" then
-						print("✅ WildFly rodando (PID: " .. result:gsub("%s+", "") .. ")")
-
-						local debug_handle = io.popen("netstat -tln 2>/dev/null | grep 8787")
-						local debug_result = debug_handle:read("*a")
-						debug_handle:close()
-
-						if debug_result ~= "" then
-							print("🐛 Debug ativo na porta 8787")
-						else
-							print("❌ Debug não disponível")
-						end
-					else
-						print("❌ WildFly não está rodando")
-						print("💡 Use <leader>dw para iniciar")
-					end
-				end,
-				desc = "WildFly: Status",
-			},
 			unpack(keys),
 		}
 	end,
@@ -67,6 +33,7 @@ return {
 		local dap = require("dap")
 		local dapui = require("dapui")
 		local fluttertools = require("flutter-tools")
+    dap.defaults.fallback.terminal_win_cmd = "belowright split | terminal"
 
 		local function load_public_key()
 			local public_key_file = vim.fn.getcwd() .. "/public.pem"
@@ -80,10 +47,10 @@ return {
 		end
 
 		local function load_env(file)
-      local hasFile = file ~= nil
-      if hasFile == false then
-        file = vim.fn.getcwd() .. "/.env"
-      end
+			local hasFile = file ~= nil and file ~= ""
+			if hasFile == false then
+				file = vim.fn.getcwd() .. "/.env"
+			end
 
 			local isGolangProject = vim.fn.filereadable(file)
 			if isGolangProject == 0 then
@@ -121,50 +88,13 @@ return {
 			},
 		})
 
-    fluttertools.setup_project({
-      {
-        name = "Debug AlyPlus Local",
-        target = "lib/main.dart",
-        dart_define = function ()
-          local env = load_env()
-          return {
-            API_BASE_URL = env.API_BASE_URL or "",
-            VIRTUAL_CARD_LANDING_PAGE = env.VIRTUAL_CARD_LANDING_PAGE or "",
-            IS_PRODUCTION = env.IS_PRODUCTION or false,
-            FAQ_URL = env.FAQ_URL or "",
-            ANDROID_RECAPTCHA_KEY = env.ANDROID_RECAPTCHA_KEY or "",
-            IOS_RECAPTCHA_KEY = env.IOS_RECAPTCHA_KEY,
-            PUBLIC_KEY = load_public_key(),
-          }
-        end
-      },
-      {
-        name = "Debug AlyPlus Staging",
-        target = "lib/main.dart",
-        dart_define = {
-          API_BASE_URL = "https://app.alyplus.com/staging/api/v1",
-          VIRTUAL_CARD_LANDING_PAGE = "https://staging-card-tokenization-jtj5lyudtq-ue.a.run.app",
-          IS_PRODUCTION = false,
-          FAQ_URL = "https://www.alyplus.com/contact-pages/faq",
-          ANDROID_RECAPTCHA_KEY = "6Lf7rowrAAAAACPgbkJYHQ3RRt0-DVEke315Iy2l",
-          IOS_RECAPTCHA_KEY = "6Ld3vYwrAAAAAN6fA8-ZvyQBFU7YylA1UqDqKvk_",
-          PUBLIC_KEY = load_public_key(),
-        }
-      },
-      {
-        name = "Debug AlyPlus Prod",
-        target = "lib/main.dart",
-        dart_define = {
-          API_BASE_URL = "https://app.alyplus.com/api/v1",
-          VIRTUAL_CARD_LANDING_PAGE = "https://staging-card-tokenization-jtj5lyudtq-ue.a.run.app",
-          IS_PRODUCTION = false,
-          FAQ_URL = "https://www.alyplus.com/contact-pages/faq",
-          ANDROID_RECAPTCHA_KEY = "6Lf7rowrAAAAACPgbkJYHQ3RRt0-DVEke315Iy2l",
-          IOS_RECAPTCHA_KEY = "6Ld3vYwrAAAAAN6fA8-ZvyQBFU7YylA1UqDqKvk_",
-          PUBLIC_KEY = load_public_key(),
-        }
-      }
-    })
+		fluttertools.setup_project({
+			{
+				name = "Debug Flutter Mobile",
+				target = "lib/main.dart",
+				dart_define_from_file = "${workspaceFolder}/.env",
+			},
+		})
 
 		require("mason-nvim-dap").setup({
 			automatic_installation = true,
@@ -172,6 +102,26 @@ return {
 		})
 
 		dapui.setup({
+      layouts = {
+        {
+          elements = {
+            { id = "scopes", size = 0.7 },
+            { id = "breakpoints", size = 0.3},
+            -- { id = "stacks", size = 0.25 },
+            -- { id = "watches", size = 0.25 },
+          },
+          size = 40,
+          position = "left",
+        },
+        {
+          elements = {
+            { id = "repl", size = 0.45 },
+            { id = "console", size = 0.55 },
+          },
+          size = 10,
+          position = "bottom",
+        },
+      },
 			icons = { expanded = "▾", collapsed = "▸", current_frame = "*" },
 			controls = {
 				icons = {
@@ -209,6 +159,18 @@ return {
 				envFile = "${workspaceFolder}/.env.local",
 				env = load_env(vim.fn.getcwd() .. "/.env.local"),
 				console = "integratedTerminal",
+        runInTerminal = true,
+				showLog = true,
+				dlvToolPath = vim.fn.exepath("dlv"),
+			},
+			{
+				name = "Test Go Local",
+				type = "go",
+				request = "launch",
+				mode = "test",
+				program = "${file}",
+				envFile = "${workspaceFolder}/.env.local",
+				env = load_env(vim.fn.getcwd() .. "/.env.local"),
 				showLog = true,
 				dlvToolPath = vim.fn.exepath("dlv"),
 			},

@@ -35,8 +35,7 @@ return {
           completeFunctionCalls = true,
         },
         fvm = false,
-      } -- use defaults
+      }
     end,
-    -- config = true,
   },
 }

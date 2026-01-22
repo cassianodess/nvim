@@ -2,7 +2,7 @@ return {
   {
     'Exafunction/codeium.vim',
     event = 'BufEnter',
-    -- enabled = false,
+    enabled = true,
     config = function()
       -- Desabilita mapeamentos padrão do Codeium
       vim.g.codeium_disable_bindings = 1

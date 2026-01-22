@@ -16,6 +16,7 @@ return {
 						mode = mode or "n"
 						vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 					end
+
 					map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
 					map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
 					map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
@@ -29,28 +30,22 @@ return {
 					map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
 					map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" })
 					map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+
 					local client = vim.lsp.get_client_by_id(event.data.client_id)
+
 					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
-						local highlight_augroup =
-							vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
+						local group = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
+
 						vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 							buffer = event.buf,
-							group = highlight_augroup,
+							group = group,
 							callback = vim.lsp.buf.document_highlight,
 						})
 
 						vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
 							buffer = event.buf,
-							group = highlight_augroup,
+							group = group,
 							callback = vim.lsp.buf.clear_references,
-						})
-
-						vim.api.nvim_create_autocmd("LspDetach", {
-							group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
-							callback = function(event2)
-								vim.lsp.buf.clear_references()
-								vim.api.nvim_clear_autocmds({ group = "kickstart-lsp-highlight", buffer = event2.buf })
-							end,
 						})
 					end
 
@@ -61,78 +56,71 @@ return {
 					end
 				end,
 			})
+
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+
 			local servers = {
-				-- clangd = {},
 				gopls = {
-					cmd = { "gopls", "serve" },
-					filetypes = { "go", "gomod", "gowork", "gotmpl" },
-					root_dir = require("lspconfig.util").root_pattern("go.work", "go.mod", ".git"),
 					settings = {
 						gopls = {
 							completeUnimported = true,
 							usePlaceholders = true,
-							hints = {
-								assignVariableTypes = true,
-								compositeLiteralFields = true,
-								constantValues = true,
-								functionTypeParameters = true,
-								parameterNames = true,
-								rangeVariableTypes = true,
-							},
 						},
 					},
 				},
-				angularls = {
-					filetypes = { "html", "typescript", "htmlangular" },
+
+				ts_ls = {
+					filetypes = {
+						"typescript",
+						"typescriptreact",
+						"javascript",
+						"javascriptreact",
+					},
 				},
+
 				pyright = {},
-				ts_ls = {},
 				jdtls = {},
-				-- dart = {},
-				-- html = {},
 				cssls = {},
+
 				lua_ls = {
 					settings = {
 						Lua = {
-							completion = {
-								callSnippet = "Replace",
-							},
+							completion = { callSnippet = "Replace" },
 						},
+					},
+				},
+
+				angularls = {
+					filetypes = { "typescript", "html", "typescriptreact", "typescript.tsx", "htmlangular" },
+				},
+
+				emmet_ls = {
+					filetypes = {
+						"html",
+						"typescriptreact",
+						"javascriptreact",
+						"css",
+						"sass",
+						"scss",
 					},
 				},
 			}
 
-			vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-				pattern = "*.component.html",
-				callback = function()
-					if vim.bo.filetype == "htmlangular" then
-						vim.bo.filetype = "html"
-					end
-				end,
-			})
-
 			require("mason").setup()
-			vim.api.nvim_create_autocmd("BufWritePost", {
-				pattern = "*.dart",
-				callback = function()
-					local dap = require("dap")
-					if dap.session() then
-						dap.repl.append("r")
-					end
-				end,
-			})
 
-			local ensure_installed = vim.tbl_keys(servers or {})
+			local ensure_installed = vim.tbl_keys(servers)
 			vim.list_extend(ensure_installed, {
 				"stylua",
+				"emmet-ls",
 			})
-			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
+
+			require("mason-tool-installer").setup({
+				ensure_installed = ensure_installed,
+			})
 
 			require("mason-lspconfig").setup({
-				automatic_installation = false,
-				ensure_installed = vim.tbl_keys(servers or {}),
+				ensure_installed = vim.tbl_keys(servers),
 				handlers = {
 					function(server_name)
 						local server = servers[server_name] or {}
@@ -143,6 +131,7 @@ return {
 			})
 		end,
 	},
+
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
@@ -156,15 +145,14 @@ return {
 				"go",
 				"dart",
 				"javascript",
+				"typescript",
+				"tsx",
 				"python",
 				"java",
 			},
 			auto_install = false,
-			highlight = {
-				enable = true,
-				additional_vim_regex_highlighting = { "ruby" },
-			},
-			indent = { enable = true, disable = { "ruby" } },
+			highlight = { enable = true },
+			indent = { enable = true },
 		},
 	},
 }
