@@ -41,7 +41,7 @@ return {
 					"-Dosgi.bundles.defaultStartLevel=4",
 					"-Declipse.product=org.eclipse.jdt.ls.core.product",
 					"-Dlog.protocol=true",
-					"-Dlog.level=ALL",
+					"-Dlog.level=ERROR",
 					"-Xmx1g",
 					"--add-modules=ALL-SYSTEM",
 					"--add-opens",
@@ -64,7 +64,7 @@ return {
 				settings = {
 					java = {
 						format = { enabled = false },
-						home = os.getenv("JAVA_HOME") .. "/usr/lib/jvm/java-21-openjdk-amd64",
+            home = os.getenv("JAVA_HOME_21"),
 						configuration = {
 							runtimes = {
 								{

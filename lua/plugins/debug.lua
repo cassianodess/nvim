@@ -33,7 +33,7 @@ return {
 		local dap = require("dap")
 		local dapui = require("dapui")
 		local fluttertools = require("flutter-tools")
-    dap.defaults.fallback.terminal_win_cmd = "belowright split | terminal"
+		dap.defaults.fallback.terminal_win_cmd = "belowright split | terminal"
 
 		local function load_public_key()
 			local public_key_file = vim.fn.getcwd() .. "/public.pem"
@@ -102,26 +102,26 @@ return {
 		})
 
 		dapui.setup({
-      layouts = {
-        {
-          elements = {
-            { id = "scopes", size = 0.7 },
-            { id = "breakpoints", size = 0.3},
-            -- { id = "stacks", size = 0.25 },
-            -- { id = "watches", size = 0.25 },
-          },
-          size = 40,
-          position = "left",
-        },
-        {
-          elements = {
-            { id = "repl", size = 0.45 },
-            { id = "console", size = 0.55 },
-          },
-          size = 10,
-          position = "bottom",
-        },
-      },
+			layouts = {
+				{
+					elements = {
+						{ id = "scopes", size = 0.7 },
+						{ id = "breakpoints", size = 0.3 },
+						-- { id = "stacks", size = 0.25 },
+						-- { id = "watches", size = 0.25 },
+					},
+					size = 40,
+					position = "left",
+				},
+				{
+					elements = {
+						{ id = "repl", size = 0.45 },
+						{ id = "console", size = 0.55 },
+					},
+					size = 10,
+					position = "bottom",
+				},
+			},
 			icons = { expanded = "▾", collapsed = "▸", current_frame = "*" },
 			controls = {
 				icons = {
@@ -159,7 +159,7 @@ return {
 				envFile = "${workspaceFolder}/.env.local",
 				env = load_env(vim.fn.getcwd() .. "/.env.local"),
 				console = "integratedTerminal",
-        runInTerminal = true,
+				runInTerminal = true,
 				showLog = true,
 				dlvToolPath = vim.fn.exepath("dlv"),
 			},
@@ -320,29 +320,6 @@ return {
 					end
 				end,
 			},
-		}
-
-		-- # No Neovim:
-		-- # <leader>dw  - Inicia WildFly + Debug
-		-- # <leader>wd  - Build + Deploy
-		-- # <leader>ws  - Ver status
-		-- Java
-		dap.configurations.java = {
-			{
-				type = "java",
-				request = "attach",
-				name = "Debug WildFly",
-				hostName = "localhost",
-				port = 8787,
-				-- projectName = 'alyplus-api',
-				timeout = 120000,
-			},
-		}
-
-		dap.adapters.java = {
-			type = "server",
-			host = "127.0.0.1",
-			port = "8787",
 		}
 
 		-- Função para iniciar WildFly automaticamente
