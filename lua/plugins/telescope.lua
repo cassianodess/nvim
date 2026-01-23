@@ -1,8 +1,9 @@
 return {
 	{
 		"nvim-telescope/telescope.nvim",
+		version = "*",
 		event = "VimEnter",
-		branch = "0.1.x",
+		-- branch = "0.1.x",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			{
@@ -56,7 +57,7 @@ return {
 						"1M",
 						"--max-count",
 						"100",
-      --       "--smart-case",
+						--       "--smart-case",
 						-- "--regexp",
 					},
 					mappings = {
@@ -129,7 +130,7 @@ return {
 			-- vim.keymap.set('n', '<leader>gb', '<cmd>Telescope git_branches<CR>', { desc = '[G]it [B]ranches' })
 			vim.keymap.set("n", "<leader>gd", "<cmd>Gitsigns preview_hunk_inline<CR>", { desc = "[G]it [D]iff" })
 
-      vim.keymap.set("n", "<leader>h", "<cmd>Telescope help_tags<CR>", { desc = "Telescope [H]elp" })
+			vim.keymap.set("n", "<leader>h", "<cmd>Telescope help_tags<CR>", { desc = "Telescope [H]elp" })
 
 			vim.keymap.set("n", "<leader>/", function()
 				builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({

@@ -202,3 +202,8 @@ vim.keymap.set("n", "<M-k>", "<cmd>cprevious<CR>", { desc = "Previous [Q]uickfix
 --   end
 -- end, { desc = "Toggle Terminal" })
 --
+--
+
+--vim.keymap.set("n", "", "<leader>bn", { desc = "Next buffer" })
+--vim.keymap.set("n", "", "<leader>bp", { desc = "Previous buffer" })
+--vim.keymap.set("n", "", "<leader>bd", { desc = "Delete buffer" })
