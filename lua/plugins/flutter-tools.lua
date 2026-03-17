@@ -28,7 +28,7 @@ return {
 					auto_open_browser = false,
 				},
 				dev_log = {
-					enabled = true,
+					enabled = false,
 					filter = nil,
 					notify_errors = true,
 					focus_on_open = false,
