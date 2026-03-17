@@ -6,33 +6,62 @@ return {
 		"williamboman/mason.nvim",
 		"jay-babu/mason-nvim-dap.nvim",
 		"leoluz/nvim-dap-go",
-		"akinsho/flutter-tools.nvim",
 	},
-	keys = function(_, keys)
-		local dap = require("dap")
-		local dapui = require("dapui")
-		return {
-			{ "<F5>", dap.continue, desc = "Debug: Start/Continue" },
-			{ "<F1>", dap.step_into, desc = "Debug: Step Into" },
-			{ "<F2>", dap.step_over, desc = "Debug: Step Over" },
-			{ "<F3>", dap.step_out, desc = "Debug: Step Out" },
-			{ "<leader>b", dap.toggle_breakpoint, desc = "Debug: Toggle Breakpoint" },
-			{
-				"<leader>B",
-				function()
-					dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
-				end,
-				desc = "Debug: Set Breakpoint",
-			},
-			{ "<F7>", dapui.toggle, desc = "Debug: See last session result." },
-			{ "<leader>u", dapui.toggle, desc = "Debug: Toggle DAP UI" },
-			unpack(keys),
-		}
-	end,
+	keys = {
+		{
+			"<F5>",
+			function()
+				require("dap").continue()
+			end,
+			desc = "Debug: Start/Continue",
+		},
+		{
+			"<leader>u",
+			function()
+				require("dapui").toggle()
+			end,
+			desc = "Debug: Toggle UI",
+		},
+		{
+			"<F1>",
+			function()
+				require("dap").step_into()
+			end,
+			desc = "Debug: Step Into",
+		},
+		{
+			"<F2>",
+			function()
+				require("dap").step_over()
+			end,
+			desc = "Debug: Step Over",
+		},
+		{
+			"<F3>",
+			function()
+				require("dap").step_out()
+			end,
+			desc = "Debug: Step Out",
+		},
+		{
+			"<leader>b",
+			function()
+				require("dap").toggle_breakpoint()
+			end,
+			desc = "Debug: Toggle Breakpoint",
+		},
+		{
+			"<F7>",
+			function()
+				require("dapui").toggle()
+			end,
+			desc = "Debug: Toggle UI",
+		},
+	},
 	config = function()
 		local dap = require("dap")
 		local dapui = require("dapui")
-		local fluttertools = require("flutter-tools")
+		-- local fluttertools = require("flutter-tools")
 		dap.defaults.fallback.terminal_win_cmd = "belowright split | terminal"
 
 		local function load_public_key()
@@ -66,39 +95,9 @@ return {
 			return env
 		end
 
-		fluttertools.setup({
-			flutter_path = os.getenv("FLUTTER_PATH") .. "/bin/flutter",
-			dev_log = {
-				enabled = true,
-				focus_on_open = true,
-				open_cmd = "tabedit",
-				notify_errors = true,
-				filter = nil,
-			},
-			lsp = {
-				color = {
-					enabled = true,
-					virtual_text = true,
-					virtual_text_str = "■",
-				},
-				settings = {
-					showTodos = true,
-					updateImportsOnRename = true,
-				},
-			},
-		})
-
-		fluttertools.setup_project({
-			{
-				name = "Debug Flutter Mobile",
-				target = "lib/main.dart",
-				dart_define_from_file = "${workspaceFolder}/.env",
-			},
-		})
-
 		require("mason-nvim-dap").setup({
 			automatic_installation = true,
-			ensure_installed = { "delve", "dart", "java", "js-debug-adapter" },
+			ensure_installed = { "delve", "dart", "java", "js-debug-adapter", "prettier" },
 		})
 
 		dapui.setup({
@@ -157,7 +156,9 @@ return {
 				mode = "debug",
 				program = "${workspaceFolder}",
 				envFile = "${workspaceFolder}/.env.local",
-				env = load_env(vim.fn.getcwd() .. "/.env.local"),
+				env = function()
+					return load_env(vim.fn.getcwd() .. "/.env.local")
+				end,
 				console = "integratedTerminal",
 				runInTerminal = true,
 				showLog = true,
@@ -170,7 +171,9 @@ return {
 				mode = "test",
 				program = "${file}",
 				envFile = "${workspaceFolder}/.env.local",
-				env = load_env(vim.fn.getcwd() .. "/.env.local"),
+				env = function()
+					return load_env(vim.fn.getcwd() .. "/.env.local")
+				end,
 				showLog = true,
 				dlvToolPath = vim.fn.exepath("dlv"),
 			},
@@ -181,7 +184,9 @@ return {
 				mode = "debug",
 				program = "${workspaceFolder}",
 				envFile = "${workspaceFolder}/.env.staging",
-				env = load_env(vim.fn.getcwd() .. "/.env.staging"),
+				env = function()
+					return load_env(vim.fn.getcwd() .. "/.env.staging")
+				end,
 				console = "integratedTerminal",
 				showLog = true,
 				dlvToolPath = vim.fn.exepath("dlv"),
@@ -193,38 +198,12 @@ return {
 				mode = "debug",
 				program = "${workspaceFolder}",
 				envFile = "${workspaceFolder}/.env.prod",
-				env = load_env(vim.fn.getcwd() .. "/.env.prod"),
+				env = function()
+					return load_env(vim.fn.getcwd() .. "/.env.prod")
+				end,
 				console = "integratedTerminal",
 				showLog = true,
 				dlvToolPath = vim.fn.exepath("dlv"),
-			},
-		}
-
-		-- Dart / Futter
-		dap.adapters.dart = {
-			type = "executable",
-			command = os.getenv("FLUTTER_PATH") .. "/bin/flutter",
-			args = { "debug-adapter" },
-		}
-
-		dap.configurations.dart = {
-			{
-				type = "dart",
-				request = "launch",
-				name = "Launch Flutter",
-				program = "${workspaceFolder}/lib/main.dart",
-				cwd = "${workspaceFolder}",
-				flutterSdkPath = os.getenv("FLUTTER_PATH"),
-				console = "integratedTerminal",
-				args = {
-					"--dart-define=API_BASE_URL=" .. (load_env().API_BASE_URL or ""),
-					"--dart-define=VIRTUAL_CARD_LANDING_PAGE=" .. (load_env().VIRTUAL_CARD_LANDING_PAGE or ""),
-					"--dart-define=FAQ_URL=" .. (load_env().FAQ_URL or ""),
-					"--dart-define=ANDROID_RECAPTCHA_KEY=" .. (load_env().ANDROID_RECAPTCHA_KEY or ""),
-					"--dart-define=IOS_RECAPTCHA_KEY=" .. (load_env().IOS_RECAPTCHA_KEY or ""),
-					"--dart-define=PUBLIC_KEY=" .. load_public_key(),
-					"--dart-define=IS_PRODUCTION=" .. (load_env().IS_PRODUCTION or "false"),
-				},
 			},
 		}
 
@@ -245,10 +224,10 @@ return {
 
 		dap.configurations.javascript = {
 			{
-				name = "Launch file",
+				name = "Attach Node (9222)",
 				type = "pwa-node",
-				request = "launch",
-				program = "${file}",
+				request = "attach",
+				processId = 9222,
 				cwd = "${workspaceFolder}",
 			},
 		}

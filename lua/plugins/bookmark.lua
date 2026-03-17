@@ -2,6 +2,7 @@ return {
   {
     "MattesGroeger/vim-bookmarks",
     enabled = true,
+		event = { "BufReadPre", "BufNewFile" },
     init = function()
       vim.g.bookmark_highlight_lines = 1
       vim.g.bookmark_center = 1

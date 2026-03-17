@@ -11,7 +11,7 @@ return {
   {
     'olimorris/onedarkpro.nvim',
     enabled = false,
-    priority = 10001,
+    priority = 1000,
     config = function()
       vim.cmd.colorscheme "onedark"
     end,

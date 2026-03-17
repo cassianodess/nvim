@@ -17,6 +17,13 @@ return {
 
 			{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
 		},
+		keys = {
+			{ "<C-p>", desc = "Find files" },
+			{ "<leader>fg", desc = "Live grep" },
+			{ "<leader>fh", desc = "Help tags" },
+			{ "<leader>fd", desc = "Diagnostics" },
+			{ "<leader><leader>", desc = "Buffers" },
+		},
 		config = function()
 			local actions = require("telescope.actions")
 			require("telescope").setup({

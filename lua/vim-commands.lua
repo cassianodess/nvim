@@ -1,7 +1,6 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
--- Indentation
-vim.opt.expandtab = false
+vim.opt.expandtab = true
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
@@ -9,32 +8,33 @@ vim.opt.smartindent = true
 vim.opt.autoindent = true
 vim.opt.smarttab = true
 
-vim.g.sleuth_autostart = false
-vim.g.sleuth_automatic = false
---
+-- vim.g.sleuth_autostart = false
+-- vim.g.sleuth_automatic = false
 
-vim.cmd("set number relativenumber")
-vim.cmd("set nu rnu")
-vim.cmd("set wrap")
--- vim.opt.wrap = false
-vim.cmd("set linebreak")
-vim.cmd("set showbreak=+++")
-vim.cmd("set foldmethod=indent")
-vim.cmd("set foldlevelstart=99")
+vim.opt.wrap = true
+vim.opt.linebreak = true
+vim.opt.showbreak = "+++"
+
+vim.opt.foldmethod = "indent"
+vim.opt.foldlevelstart = 99
 
 vim.opt.termguicolors = true
 
 vim.cmd([[highlight ExtraWhitespace ctermbg=red guibg=red]])
-vim.fn.matchadd("ExtraWhitespace", "\\s\\+$")
+
+vim.api.nvim_create_autocmd("BufWinEnter", {
+	callback = function()
+		vim.fn.matchadd("ExtraWhitespace", "\\s\\+$")
+	end,
+})
 
 vim.api.nvim_set_keymap("v", "<C-S-c>", '"+y', { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<C-d>", "<C-d>zz", {})
 vim.api.nvim_set_keymap("n", "<C-u>", "<C-u>zz", {})
--- vim.api.nvim_set_keymap('n', '<C-a>', 'ggVG', { silent = true, noremap = true })
 
-vim.opt.lazyredraw = true -- Reduz atualizações de tela durante execução de macros
-vim.opt.synmaxcol = 200 -- Limita o número de colunas analisadas pela syntax
-vim.opt.updatetime = 300 -- Reduz o tempo de espera para atualizações
+vim.opt.lazyredraw = true
+vim.opt.synmaxcol = 200
+vim.opt.updatetime = 300
 
 vim.opt.swapfile = false
 vim.opt.incsearch = true
@@ -49,8 +49,7 @@ vim.keymap.set("n", "N", "Nzzzv")
 vim.g.have_nerd_font = true
 
 vim.opt.number = true
--- vim.opt.mouse = 'a'
-vim.cmd("set mouse=a")
+vim.opt.mouse = "a"
 vim.opt.showmode = false
 vim.schedule(function()
 	vim.opt.clipboard = "unnamedplus"
@@ -61,11 +60,8 @@ vim.opt.breakindent = true
 vim.opt.undofile = true
 
 vim.opt.ignorecase = true
--- vim.opt.smartcase = true
 
 vim.opt.signcolumn = "yes"
-
-vim.opt.updatetime = 250
 
 vim.opt.timeoutlen = 300
 
@@ -88,24 +84,10 @@ vim.opt.scrolloff = 10
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 vim.opt.hlsearch = true
-vim.opt.incsearch = true
-
--- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-
--- vim.api.nvim_create_autocmd("FileType", {
---   pattern = "java",
---   callback = function()
---     vim.b.sleuth_automatic = false -- Desativa o vim-sleuth para arquivos Java
---     vim.opt_local.expandtab = true
---     vim.opt_local.tabstop = 4
---     vim.opt_local.softtabstop = 4
---     vim.opt_local.shiftwidth = 4
---   end,
--- })
 
 vim.api.nvim_create_autocmd("DiagnosticChanged", {
 	callback = function()
-		vim.diagnostic.setqflist({ open = false }) -- Atualiza a lista de quickfix
+		vim.diagnostic.setqflist({ open = false })
 	end,
 })
 
@@ -142,14 +124,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "LSP Rename Symbol" })
 vim.keymap.set("n", "<leader>tw", [[:%s/\s\+$//e<CR>]], { desc = "[T]rim [W]hitespace" })
--- vim.keymap.set("n", "<leader>e", function()
---   if vim.bo.filetype == "netrw" then
---     vim.cmd("bd")
---   else
---     vim.cmd("Ex")
---   end
--- end, { desc = "Toggle File [E]xplorer" })
---
 
 vim.keymap.set("n", "<leader>sr", function()
 	vim.cmd("source " .. vim.fn.expand("%"))
@@ -179,31 +153,3 @@ vim.api.nvim_create_autocmd("TermOpen", {
 
 vim.keymap.set("n", "<M-j>", "<cmd>cnext<CR>", { desc = "Next [Q]uickfix" })
 vim.keymap.set("n", "<M-k>", "<cmd>cprevious<CR>", { desc = "Previous [Q]uickfix" })
-
---control variables for terminal
--- local term_buf = nil
--- local term_win = nil
--- vim.keymap.set("n", "<leader>j", function()
---   if term_buf and vim.api.nvim_buf_is_valid(term_buf) then
---     if term_win and vim.api.nvim_win_is_valid(term_win) then
---       vim.api.nvim_win_hide(term_win)
---       term_win = nil
---     else
---       vim.cmd("botright split")
---       term_win = vim.api.nvim_get_current_win()
---       vim.api.nvim_win_set_height(term_win, 15)
---       vim.api.nvim_win_set_buf(term_win, term_buf)
---     end
---   else
---     vim.cmd("botright split | term")
---     term_win = vim.api.nvim_get_current_win()
---     term_buf = vim.api.nvim_win_get_buf(term_win)
---     vim.api.nvim_win_set_height(term_win, 15)
---   end
--- end, { desc = "Toggle Terminal" })
---
---
-
---vim.keymap.set("n", "", "<leader>bn", { desc = "Next buffer" })
---vim.keymap.set("n", "", "<leader>bp", { desc = "Previous buffer" })
---vim.keymap.set("n", "", "<leader>bd", { desc = "Delete buffer" })

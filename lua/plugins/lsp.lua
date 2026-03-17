@@ -2,12 +2,13 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
-			{ "williamboman/mason.nvim", config = true },
+			{ "williamboman/mason.nvim", cmd = "Mason" },
 			"williamboman/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			{ "j-hui/fidget.nvim", opts = {} },
 			"hrsh7th/cmp-nvim-lsp",
 		},
+		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
@@ -107,7 +108,10 @@ return {
 				},
 			}
 
-			require("mason").setup()
+			local ok, mason = pcall(require, "mason")
+			if ok then
+				mason.setup()
+			end
 
 			local ensure_installed = vim.tbl_keys(servers)
 			vim.list_extend(ensure_installed, {
@@ -136,6 +140,7 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
 		main = "nvim-treesitter.config",
+		event = { "BufReadPost", "BufNewFile" },
 		opts = {
 			ensure_installed = {
 				"html",
@@ -152,7 +157,7 @@ return {
 			},
 			auto_install = false,
 			highlight = { enable = true },
-			indent = { enable = true },
+			indent = { enable = false },
 		},
 	},
 }
